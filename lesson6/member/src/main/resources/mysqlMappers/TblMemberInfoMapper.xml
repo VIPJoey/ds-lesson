@@ -1,0 +1,667 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mmc.lesson.member.mapper.TblMemberInfoMapper">
+  <resultMap id="BaseResultMap" type="com.mmc.lesson.member.model.TblMemberInfo">
+    <id column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="uname" jdbcType="VARCHAR" property="uname" />
+    <result column="usex" jdbcType="TINYINT" property="usex" />
+    <result column="ubirth" jdbcType="TIMESTAMP" property="ubirth" />
+    <result column="utel" jdbcType="CHAR" property="utel" />
+    <result column="uaddr" jdbcType="VARCHAR" property="uaddr" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="state" jdbcType="TINYINT" property="state" />
+    <result column="delFlag" jdbcType="TINYINT" property="delFlag" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.mmc.lesson.member.model.TblMemberInfo">
+    <result column="uphoto" jdbcType="LONGVARBINARY" property="uphoto" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    uid, uname, usex, ubirth, utel, uaddr, createTime, updateTime, state, delFlag
+  </sql>
+  <sql id="Blob_Column_List">
+    uphoto
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.mmc.lesson.member.model.TblMemberInfoExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from Tbl_MemberInfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.mmc.lesson.member.model.TblMemberInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from Tbl_MemberInfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from Tbl_MemberInfo
+    where uid = #{uid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from Tbl_MemberInfo
+    where uid = #{uid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mmc.lesson.member.model.TblMemberInfoExample">
+    delete from Tbl_MemberInfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mmc.lesson.member.model.TblMemberInfo">
+    insert into Tbl_MemberInfo (uid, uname, usex, 
+      ubirth, utel, uaddr, 
+      createTime, updateTime, state, 
+      delFlag, uphoto)
+    values (#{uid,jdbcType=BIGINT}, #{uname,jdbcType=VARCHAR}, #{usex,jdbcType=TINYINT}, 
+      #{ubirth,jdbcType=TIMESTAMP}, #{utel,jdbcType=CHAR}, #{uaddr,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{state,jdbcType=TINYINT}, 
+      #{delFlag,jdbcType=TINYINT}, #{uphoto,jdbcType=LONGVARBINARY})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mmc.lesson.member.model.TblMemberInfo">
+    insert into Tbl_MemberInfo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="uname != null">
+        uname,
+      </if>
+      <if test="usex != null">
+        usex,
+      </if>
+      <if test="ubirth != null">
+        ubirth,
+      </if>
+      <if test="utel != null">
+        utel,
+      </if>
+      <if test="uaddr != null">
+        uaddr,
+      </if>
+      <if test="createTime != null">
+        createTime,
+      </if>
+      <if test="updateTime != null">
+        updateTime,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="delFlag != null">
+        delFlag,
+      </if>
+      <if test="uphoto != null">
+        uphoto,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="uname != null">
+        #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="usex != null">
+        #{usex,jdbcType=TINYINT},
+      </if>
+      <if test="ubirth != null">
+        #{ubirth,jdbcType=TIMESTAMP},
+      </if>
+      <if test="utel != null">
+        #{utel,jdbcType=CHAR},
+      </if>
+      <if test="uaddr != null">
+        #{uaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=TINYINT},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=TINYINT},
+      </if>
+      <if test="uphoto != null">
+        #{uphoto,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mmc.lesson.member.model.TblMemberInfoExample" resultType="java.lang.Long">
+    select count(*) from Tbl_MemberInfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update Tbl_MemberInfo
+    <set>
+      <if test="record.uid != null">
+        uid = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="record.uname != null">
+        uname = #{record.uname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usex != null">
+        usex = #{record.usex,jdbcType=TINYINT},
+      </if>
+      <if test="record.ubirth != null">
+        ubirth = #{record.ubirth,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.utel != null">
+        utel = #{record.utel,jdbcType=CHAR},
+      </if>
+      <if test="record.uaddr != null">
+        uaddr = #{record.uaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        createTime = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        updateTime = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=TINYINT},
+      </if>
+      <if test="record.delFlag != null">
+        delFlag = #{record.delFlag,jdbcType=TINYINT},
+      </if>
+      <if test="record.uphoto != null">
+        uphoto = #{record.uphoto,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update Tbl_MemberInfo
+    set uid = #{record.uid,jdbcType=BIGINT},
+      uname = #{record.uname,jdbcType=VARCHAR},
+      usex = #{record.usex,jdbcType=TINYINT},
+      ubirth = #{record.ubirth,jdbcType=TIMESTAMP},
+      utel = #{record.utel,jdbcType=CHAR},
+      uaddr = #{record.uaddr,jdbcType=VARCHAR},
+      createTime = #{record.createTime,jdbcType=TIMESTAMP},
+      updateTime = #{record.updateTime,jdbcType=TIMESTAMP},
+      state = #{record.state,jdbcType=TINYINT},
+      delFlag = #{record.delFlag,jdbcType=TINYINT},
+      uphoto = #{record.uphoto,jdbcType=LONGVARBINARY}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update Tbl_MemberInfo
+    set uid = #{record.uid,jdbcType=BIGINT},
+      uname = #{record.uname,jdbcType=VARCHAR},
+      usex = #{record.usex,jdbcType=TINYINT},
+      ubirth = #{record.ubirth,jdbcType=TIMESTAMP},
+      utel = #{record.utel,jdbcType=CHAR},
+      uaddr = #{record.uaddr,jdbcType=VARCHAR},
+      createTime = #{record.createTime,jdbcType=TIMESTAMP},
+      updateTime = #{record.updateTime,jdbcType=TIMESTAMP},
+      state = #{record.state,jdbcType=TINYINT},
+      delFlag = #{record.delFlag,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mmc.lesson.member.model.TblMemberInfo">
+    update Tbl_MemberInfo
+    <set>
+      <if test="uname != null">
+        uname = #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="usex != null">
+        usex = #{usex,jdbcType=TINYINT},
+      </if>
+      <if test="ubirth != null">
+        ubirth = #{ubirth,jdbcType=TIMESTAMP},
+      </if>
+      <if test="utel != null">
+        utel = #{utel,jdbcType=CHAR},
+      </if>
+      <if test="uaddr != null">
+        uaddr = #{uaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        updateTime = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=TINYINT},
+      </if>
+      <if test="delFlag != null">
+        delFlag = #{delFlag,jdbcType=TINYINT},
+      </if>
+      <if test="uphoto != null">
+        uphoto = #{uphoto,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    where uid = #{uid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mmc.lesson.member.model.TblMemberInfo">
+    update Tbl_MemberInfo
+    set uname = #{uname,jdbcType=VARCHAR},
+      usex = #{usex,jdbcType=TINYINT},
+      ubirth = #{ubirth,jdbcType=TIMESTAMP},
+      utel = #{utel,jdbcType=CHAR},
+      uaddr = #{uaddr,jdbcType=VARCHAR},
+      createTime = #{createTime,jdbcType=TIMESTAMP},
+      updateTime = #{updateTime,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=TINYINT},
+      delFlag = #{delFlag,jdbcType=TINYINT},
+      uphoto = #{uphoto,jdbcType=LONGVARBINARY}
+    where uid = #{uid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mmc.lesson.member.model.TblMemberInfo">
+    update Tbl_MemberInfo
+    set uname = #{uname,jdbcType=VARCHAR},
+      usex = #{usex,jdbcType=TINYINT},
+      ubirth = #{ubirth,jdbcType=TIMESTAMP},
+      utel = #{utel,jdbcType=CHAR},
+      uaddr = #{uaddr,jdbcType=VARCHAR},
+      createTime = #{createTime,jdbcType=TIMESTAMP},
+      updateTime = #{updateTime,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=TINYINT},
+      delFlag = #{delFlag,jdbcType=TINYINT}
+    where uid = #{uid,jdbcType=BIGINT}
+  </update>
+  <insert id="batchInsert" parameterType="map">
+    insert into Tbl_MemberInfo
+    (uid, uname, usex, ubirth, utel, uaddr, createTime, updateTime, state, delFlag, uphoto
+      )
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.uid,jdbcType=BIGINT}, #{item.uname,jdbcType=VARCHAR}, #{item.usex,jdbcType=TINYINT}, 
+        #{item.ubirth,jdbcType=TIMESTAMP}, #{item.utel,jdbcType=CHAR}, #{item.uaddr,jdbcType=VARCHAR}, 
+        #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP}, #{item.state,jdbcType=TINYINT}, 
+        #{item.delFlag,jdbcType=TINYINT}, #{item.uphoto,jdbcType=LONGVARBINARY})
+    </foreach>
+  </insert>
+  <insert id="batchInsertSelective" parameterType="map">
+    insert into Tbl_MemberInfo (
+    <foreach collection="selective" item="column" separator=",">
+      ${column.escapedColumnName}
+    </foreach>
+    )
+    values
+    <foreach collection="list" item="item" separator=",">
+      (
+      <foreach collection="selective" item="column" separator=",">
+        <if test="'uid'.toString() == column.value">
+          #{item.uid,jdbcType=BIGINT}
+        </if>
+        <if test="'uname'.toString() == column.value">
+          #{item.uname,jdbcType=VARCHAR}
+        </if>
+        <if test="'usex'.toString() == column.value">
+          #{item.usex,jdbcType=TINYINT}
+        </if>
+        <if test="'ubirth'.toString() == column.value">
+          #{item.ubirth,jdbcType=TIMESTAMP}
+        </if>
+        <if test="'utel'.toString() == column.value">
+          #{item.utel,jdbcType=CHAR}
+        </if>
+        <if test="'uaddr'.toString() == column.value">
+          #{item.uaddr,jdbcType=VARCHAR}
+        </if>
+        <if test="'createTime'.toString() == column.value">
+          #{item.createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="'updateTime'.toString() == column.value">
+          #{item.updateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="'state'.toString() == column.value">
+          #{item.state,jdbcType=TINYINT}
+        </if>
+        <if test="'delFlag'.toString() == column.value">
+          #{item.delFlag,jdbcType=TINYINT}
+        </if>
+        <if test="'uphoto'.toString() == column.value">
+          #{item.uphoto,jdbcType=LONGVARBINARY}
+        </if>
+      </foreach>
+      )
+    </foreach>
+  </insert>
+  <insert id="upsertSelective" parameterType="com.mmc.lesson.member.model.TblMemberInfo">
+    insert into Tbl_MemberInfo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="uname != null">
+        uname,
+      </if>
+      <if test="usex != null">
+        usex,
+      </if>
+      <if test="ubirth != null">
+        ubirth,
+      </if>
+      <if test="utel != null">
+        utel,
+      </if>
+      <if test="uaddr != null">
+        uaddr,
+      </if>
+      <if test="createTime != null">
+        createTime,
+      </if>
+      <if test="updateTime != null">
+        updateTime,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="delFlag != null">
+        delFlag,
+      </if>
+      <if test="uphoto != null">
+        uphoto,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="uname != null">
+        #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="usex != null">
+        #{usex,jdbcType=TINYINT},
+      </if>
+      <if test="ubirth != null">
+        #{ubirth,jdbcType=TIMESTAMP},
+      </if>
+      <if test="utel != null">
+        #{utel,jdbcType=CHAR},
+      </if>
+      <if test="uaddr != null">
+        #{uaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=TINYINT},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=TINYINT},
+      </if>
+      <if test="uphoto != null">
+        #{uphoto,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="uid != null">
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="uname != null">
+        uname = #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="usex != null">
+        usex = #{usex,jdbcType=TINYINT},
+      </if>
+      <if test="ubirth != null">
+        ubirth = #{ubirth,jdbcType=TIMESTAMP},
+      </if>
+      <if test="utel != null">
+        utel = #{utel,jdbcType=CHAR},
+      </if>
+      <if test="uaddr != null">
+        uaddr = #{uaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        updateTime = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=TINYINT},
+      </if>
+      <if test="delFlag != null">
+        delFlag = #{delFlag,jdbcType=TINYINT},
+      </if>
+      <if test="uphoto != null">
+        uphoto = #{uphoto,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <insert id="upsert" parameterType="com.mmc.lesson.member.model.TblMemberInfo">
+    insert into Tbl_MemberInfo
+    (uid, uname, usex, ubirth, utel, uaddr, createTime, updateTime, state, delFlag)
+    values
+    (#{uid,jdbcType=BIGINT}, #{uname,jdbcType=VARCHAR}, #{usex,jdbcType=TINYINT}, #{ubirth,jdbcType=TIMESTAMP}, 
+      #{utel,jdbcType=CHAR}, #{uaddr,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{state,jdbcType=TINYINT}, #{delFlag,jdbcType=TINYINT}
+      )
+    on duplicate key update 
+    uid = #{uid,jdbcType=BIGINT}, 
+    uname = #{uname,jdbcType=VARCHAR}, 
+    usex = #{usex,jdbcType=TINYINT}, 
+    ubirth = #{ubirth,jdbcType=TIMESTAMP}, 
+    utel = #{utel,jdbcType=CHAR}, 
+    uaddr = #{uaddr,jdbcType=VARCHAR}, 
+    createTime = #{createTime,jdbcType=TIMESTAMP}, 
+    updateTime = #{updateTime,jdbcType=TIMESTAMP}, 
+    state = #{state,jdbcType=TINYINT}, 
+    delFlag = #{delFlag,jdbcType=TINYINT}
+  </insert>
+  <insert id="upsertWithBLOBs" parameterType="com.mmc.lesson.member.model.TblMemberInfo">
+    insert into Tbl_MemberInfo
+    (uid, uname, usex, ubirth, utel, uaddr, createTime, updateTime, state, delFlag, uphoto
+      )
+    values
+    (#{uid,jdbcType=BIGINT}, #{uname,jdbcType=VARCHAR}, #{usex,jdbcType=TINYINT}, #{ubirth,jdbcType=TIMESTAMP}, 
+      #{utel,jdbcType=CHAR}, #{uaddr,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{state,jdbcType=TINYINT}, #{delFlag,jdbcType=TINYINT}, 
+      #{uphoto,jdbcType=LONGVARBINARY})
+    on duplicate key update 
+    uid = #{uid,jdbcType=BIGINT}, 
+    uname = #{uname,jdbcType=VARCHAR}, 
+    usex = #{usex,jdbcType=TINYINT}, 
+    ubirth = #{ubirth,jdbcType=TIMESTAMP}, 
+    utel = #{utel,jdbcType=CHAR}, 
+    uaddr = #{uaddr,jdbcType=VARCHAR}, 
+    createTime = #{createTime,jdbcType=TIMESTAMP}, 
+    updateTime = #{updateTime,jdbcType=TIMESTAMP}, 
+    state = #{state,jdbcType=TINYINT}, 
+    delFlag = #{delFlag,jdbcType=TINYINT}, 
+    uphoto = #{uphoto,jdbcType=LONGVARBINARY}
+  </insert>
+  <insert id="batchUpsertSelective" parameterType="map">
+    insert into Tbl_MemberInfo (
+    <foreach collection="selective" item="column" separator=",">
+      ${column.escapedColumnName}
+    </foreach>
+    )
+    values
+    <foreach collection="list" item="item" separator=",">
+      (
+      <foreach collection="selective" item="column" separator=",">
+        <if test="'uid'.toString() == column.value">
+          #{item.uid,jdbcType=BIGINT}
+        </if>
+        <if test="'uname'.toString() == column.value">
+          #{item.uname,jdbcType=VARCHAR}
+        </if>
+        <if test="'usex'.toString() == column.value">
+          #{item.usex,jdbcType=TINYINT}
+        </if>
+        <if test="'ubirth'.toString() == column.value">
+          #{item.ubirth,jdbcType=TIMESTAMP}
+        </if>
+        <if test="'utel'.toString() == column.value">
+          #{item.utel,jdbcType=CHAR}
+        </if>
+        <if test="'uaddr'.toString() == column.value">
+          #{item.uaddr,jdbcType=VARCHAR}
+        </if>
+        <if test="'createTime'.toString() == column.value">
+          #{item.createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="'updateTime'.toString() == column.value">
+          #{item.updateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="'state'.toString() == column.value">
+          #{item.state,jdbcType=TINYINT}
+        </if>
+        <if test="'delFlag'.toString() == column.value">
+          #{item.delFlag,jdbcType=TINYINT}
+        </if>
+        <if test="'uphoto'.toString() == column.value">
+          #{item.uphoto,jdbcType=LONGVARBINARY}
+        </if>
+      </foreach>
+      )
+    </foreach>
+    on duplicate key update 
+    <foreach collection="selective" item="column" separator=",">
+      ${column.escapedColumnName} = values(${column.escapedColumnName})
+    </foreach>
+  </insert>
+  <insert id="batchUpsert" parameterType="map">
+    insert into Tbl_MemberInfo
+    (uid, uname, usex, ubirth, utel, uaddr, createTime, updateTime, state, delFlag)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.uid,jdbcType=BIGINT}, #{item.uname,jdbcType=VARCHAR}, #{item.usex,jdbcType=TINYINT}, 
+        #{item.ubirth,jdbcType=TIMESTAMP}, #{item.utel,jdbcType=CHAR}, #{item.uaddr,jdbcType=VARCHAR}, 
+        #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP}, #{item.state,jdbcType=TINYINT}, 
+        #{item.delFlag,jdbcType=TINYINT})
+    </foreach>
+    on duplicate key update 
+    uid = values(uid),
+    uname = values(uname),
+    usex = values(usex),
+    ubirth = values(ubirth),
+    utel = values(utel),
+    uaddr = values(uaddr),
+    createTime = values(createTime),
+    updateTime = values(updateTime),
+    state = values(state),
+    delFlag = values(delFlag)
+  </insert>
+  <insert id="batchUpsertWithBLOBs" parameterType="map">
+    insert into Tbl_MemberInfo
+    (uid, uname, usex, ubirth, utel, uaddr, createTime, updateTime, state, delFlag, uphoto
+      )
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.uid,jdbcType=BIGINT}, #{item.uname,jdbcType=VARCHAR}, #{item.usex,jdbcType=TINYINT}, 
+        #{item.ubirth,jdbcType=TIMESTAMP}, #{item.utel,jdbcType=CHAR}, #{item.uaddr,jdbcType=VARCHAR}, 
+        #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP}, #{item.state,jdbcType=TINYINT}, 
+        #{item.delFlag,jdbcType=TINYINT}, #{item.uphoto,jdbcType=LONGVARBINARY})
+    </foreach>
+    on duplicate key update 
+    uid = values(uid),
+    uname = values(uname),
+    usex = values(usex),
+    ubirth = values(ubirth),
+    utel = values(utel),
+    uaddr = values(uaddr),
+    createTime = values(createTime),
+    updateTime = values(updateTime),
+    state = values(state),
+    delFlag = values(delFlag),
+    uphoto = values(uphoto)
+  </insert>
+</mapper>
