@@ -1,0 +1,56 @@
+#!/bin/bash
+set -e
+
+git config user.name VIPJoey
+git config user.email mmcorz@gmail.com
+
+lesson="$1"
+
+if [ x"" == x"$1" ]
+then
+	echo "error."
+	exit
+fi
+
+rm -rf $lesson
+mkdir -p $lesson
+
+basePath=/Users/yezhouwan/Codes/ds-workspace/$lesson
+cd $basePath
+
+cp -rf ~/Codes/mmc-workspace/member-service ./
+
+# delete root
+cd $basePath
+rm -rf .idea
+rm -rf *.iml
+
+# delete api
+cd $basePath
+cd api
+rm -rf *.iml
+rm -rf target
+
+# delete member
+cd $basePath
+cd member-service/member
+ls -al
+
+rm -rf .mvn
+rm -rf *.iml
+rm -rf mvn*
+rm -rf target
+rm -rf HELP*
+rm -rf log*
+rm -rf .idea*
+rm -rf .git*
+
+
+grep -i "tenkye" -rl ./ |xargs perl -pi -e 's|tenkye|VIPJoey|g'
+grep -i "9.135.88.75" -rl ./ |xargs perl -pi -e 's|9.135.88.75|9.134.xxx.xxx|g'
+grep -i "9.134.77.133" -rl ./ |xargs perl -pi -e 's|9.134.77.133|9.134.xxx.xxx|g'
+ls -al
+cd -
+
+
+
